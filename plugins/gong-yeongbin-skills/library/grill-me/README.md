@@ -68,4 +68,4 @@ mkdir -p ~/.claude/skills/grill-me && \
 
 ## License
 
-MIT — see [LICENSE](../../LICENSE).
+MIT — see [LICENSE](LICENSE).

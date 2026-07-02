@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
-# guidelines.md 내용을 사용자 전역 ~/.claude/CLAUDE.md 에 마커 블록으로 idempotent하게 주입하는 스크립트
+# guidelines.md 내용을 유저 전역 또는 프로젝트 CLAUDE.md 에 마커 블록으로 idempotent하게 주입하는 스크립트
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GUIDELINES="$SCRIPT_DIR/guidelines.md"
-TARGET="$HOME/.claude/CLAUDE.md"
+# 인자: --user(기본) | --project [디렉터리(기본: 현재 디렉터리)]
+MODE="${1:---user}"
+case "$MODE" in
+  --user)
+    TARGET="$HOME/.claude/CLAUDE.md"
+    ;;
+  --project)
+    TARGET="${2:-$PWD}/CLAUDE.md"
+    ;;
+  *)
+    echo "usage: install.sh [--user | --project [dir]]" >&2
+    exit 1
+    ;;
+esac
 START_MARKER="<!-- andrej-karpathy-guidelines:start -->"
 END_MARKER="<!-- andrej-karpathy-guidelines:end -->"
 
