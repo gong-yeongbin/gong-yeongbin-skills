@@ -1,0 +1,14 @@
+{
+  "name": "gong-yeongbin",
+  "owner": {
+    "name": "gong-yeongbin",
+    "email": "youngbin816@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "andrej-karpathy-guidelines",
+      "source": "./plugins/andrej-karpathy-guidelines",
+      "description": "코딩 행동지침을 사용자 전역 CLAUDE.md에 설치하는 스킬"
+    }
+  ]
+}
