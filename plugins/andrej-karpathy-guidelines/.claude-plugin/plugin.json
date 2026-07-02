@@ -1,9 +1,0 @@
-{
-  "name": "andrej-karpathy-guidelines",
-  "version": "1.0.0",
-  "description": "코딩 행동지침을 사용자 전역 CLAUDE.md에 설치하는 스킬",
-  "author": {
-    "name": "gong-yeongbin",
-    "email": "youngbin816@gmail.com"
-  }
-}
