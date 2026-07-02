@@ -9,6 +9,11 @@
       "name": "andrej-karpathy-guidelines",
       "source": "./plugins/andrej-karpathy-guidelines",
       "description": "코딩 행동지침을 사용자 전역 CLAUDE.md에 설치하는 스킬"
+    },
+    {
+      "name": "gong-yeongbin-skills",
+      "source": "./plugins/gong-yeongbin-skills",
+      "description": "자주 쓰는 스킬 모음. library의 스킬 목록을 보여주고 선택한 스킬만 ~/.claude/skills 에 설치한다."
     }
   ]
 }
