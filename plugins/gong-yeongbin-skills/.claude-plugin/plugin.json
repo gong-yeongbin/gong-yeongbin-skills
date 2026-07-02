@@ -1,6 +1,6 @@
 {
   "name": "gong-yeongbin-skills",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "자주 쓰는 스킬 모음. library의 스킬 목록을 보여주고 선택한 스킬만 ~/.claude/skills 에 설치한다.",
   "author": {
     "name": "gong-yeongbin",
