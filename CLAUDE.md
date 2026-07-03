@@ -4,45 +4,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 저장소 개요
 
-Claude Code 플러그인 마켓플레이스 저장소다. 빌드/테스트/린트 도구는 없으며, 산출물은 SKILL.md 문서와 bash 스크립트뿐이다.
+Claude Code 스킬 카탈로그 저장소다. 빌드/테스트/린트 도구는 없으며, 산출물은 SKILL.md 문서와 부속 bash 스크립트뿐이다. 표준 도구 [`skills`](https://github.com/vercel-labs/skills) CLI로 설치하는 것을 전제로 한다.
 
-- `.claude-plugin/marketplace.json` — 마켓플레이스 매니페스트. 플러그인 목록과 소스 경로를 정의한다.
-- `plugins/gong-yeongbin-skills/` — 유일한 플러그인. 매니페스트는 `.claude-plugin/plugin.json`이다.
+## 핵심 구조
 
-## 핵심 아키텍처 — 2단계 스킬 구조
+`skills/` 아래에 스킬 하나당 디렉터리 하나가 있고, 각 디렉터리에 `SKILL.md`와 필요한 부속 파일이 들어간다.
 
-플러그인 안에서 스킬이 두 계층으로 나뉜다. 이 구분이 이 저장소를 이해하는 열쇠다.
+```
+skills/<스킬명>/SKILL.md      # 필수. frontmatter의 name, description 필수
+skills/<스킬명>/...           # LICENSE, install.sh 등 부속 파일 (선택)
+```
 
-| 경로 | 역할 |
-|---|---|
-| `plugins/gong-yeongbin-skills/skills/` | 플러그인 설치 시 자동 로드되는 스킬. 현재 `install` 하나뿐이다. |
-| `plugins/gong-yeongbin-skills/library/` | 배포용 카탈로그. 플러그인 스킬로 로드되지 않는다. |
+`skills` CLI는 기본 탐색에서 `skills/<스킬명>/SKILL.md` 깊이를 자동으로 집어 올린다. 사용자가 `npx skills@latest add gong-yeongbin/gong-yeongbin-skills --list` 를 실행하면 이 목록이 그대로 선택지로 뜨고, 고른 스킬이 SKILL.md와 같은 디렉터리의 부속 파일까지 통째로 복사된다.
 
-동작 흐름은 다음과 같다. `install` 스킬이 `skills/install/install.sh`를 호출하고, 이 스크립트가 `library/*/SKILL.md`를 스캔해 목록을 만들거나(`--list`) 사용자가 선택한 스킬 디렉터리를 `~/.claude/skills/<스킬명>`으로 통째로 복사한다. 기존 디렉터리는 삭제 후 재복사되어 갱신된다.
+## 새 스킬 추가하기
 
-## library에 새 스킬 추가하기
+1. `skills/<스킬명>/SKILL.md`를 만든다. frontmatter의 `name`, `description`이 필수다.
+2. 외부에서 가져온 스킬이면 원본 라이선스 파일(예: `LICENSE`)을 같은 디렉터리에 함께 둔다. `skills` CLI가 부속 파일까지 복사하므로 재배포 조건이 유지된다.
+3. 스킬이 실행 시 별도 설치 동작(예: CLAUDE.md에 지침 주입)을 수행해야 하면 `install.sh` 같은 부속 스크립트를 같은 디렉터리에 두고, SKILL.md 본문에서 그 실행 방법을 지시한다. `andrej-karpathy-guidelines`가 이 방식이다.
 
-1. `plugins/gong-yeongbin-skills/library/<스킬명>/SKILL.md`를 만든다. frontmatter의 `name`, `description`이 필수다.
-2. `description`은 frontmatter에서 반드시 한 줄이어야 한다. `install.sh --list`가 `awk '/^description:/'`로 첫 줄만 파싱하므로 여러 줄로 쓰면 목록에서 잘린다.
-3. `plugins/gong-yeongbin-skills/.claude-plugin/plugin.json`의 `version`을 올린다. 기존 커밋들이 이 관례를 따른다.
-
-별도 등록 절차는 없다. `library/` 아래 디렉터리에 SKILL.md만 있으면 `--list`가 자동으로 집어 올린다.
+별도 등록 절차는 없다. `skills/` 아래 디렉터리에 SKILL.md만 있으면 `skills` CLI가 자동으로 집어 올린다.
 
 ## 자주 쓰는 명령
 
 ```bash
-# library 스킬 목록 확인 (스킬명<TAB>상태<TAB>설명)
-bash plugins/gong-yeongbin-skills/skills/install/install.sh --list
+# 카탈로그 스킬 목록 확인 (로컬 저장소 기준)
+npx -y skills@latest add . --list
 
-# 특정 스킬 설치 동작 검증 — 실제 ~/.claude/skills 에 복사되므로 주의
-bash plugins/gong-yeongbin-skills/skills/install/install.sh <스킬명>
+# 특정 스킬 설치 동작 검증 (프로젝트 로컬 .claude/skills 에 복사됨)
+npx -y skills@latest add . --skill <스킬명> --yes
 ```
 
 ## 컨벤션
 
 - 커밋 메시지는 한국어이며 Conventional Commits 접두사(`feat:`, `refactor:` 등)를 쓴다.
-- SKILL.md 본문, 매니페스트의 description 등 문서는 한국어로 작성한다.
-- 일부 library 스킬(예: `andrej-karpathy-guidelines`)은 자체 `install.sh`를 포함하며, 스킬 실행 시 그 스크립트가 실제 설치 동작을 수행한다.
+- SKILL.md 본문 등 문서는 한국어로 작성한다. 단 외부에서 원문 그대로 가져온 스킬(예: `humanizer`)은 원문을 유지한다.
+- 외부 스킬은 출처와 라이선스를 README 표에 표기한다.
 
 ## 절대 규칙
 

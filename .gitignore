@@ -210,3 +210,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# skills CLI 로 스킬을 설치하면 생성되는 잠금/설치 산출물 (카탈로그 저장소에서는 관리 대상 아님)
+skills-lock.json
+.claude/
+
