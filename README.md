@@ -45,11 +45,29 @@ bash ~/.claude/skills/andrej-karpathy-guidelines/install.sh
 - 전역 `~/.claude/CLAUDE.md`는 새 세션부터 로드되므로, 변경은 **다음 세션부터** 적용된다.
 - `skills add` 없이 이 저장소를 clone 했다면 복사 단계를 건너뛰고 `bash skills/andrej-karpathy-guidelines/install.sh`를 바로 실행해도 된다.
 
+### `create-issue` — agent teams 전제조건
+
+이 스킬은 Claude Code 실험 기능 **agent teams**가 필요하다. 리더(현재 세션)가 팀원 2명을 spawn해 토론시키는 구조라, 이 기능이 꺼져 있으면 동작하지 않는다.
+
+활성화하려면 `~/.claude/settings.json`(또는 프로젝트 `.claude/settings.json`)의 `env`에 다음을 추가한다.
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+```
+
+- 실험 기능이라 적용에 Claude Code **재시작**이 필요할 수 있다.
+- 자세한 내용은 공식 문서 참조: <https://code.claude.com/docs/en/agent-teams>
+
 ## 제공 스킬
 
 | 스킬 | 설명 | 출처 / 라이선스 |
 |---|---|---|
 | `andrej-karpathy-guidelines` | LLM 코딩 실수를 줄이는 행동지침 4가지를 사용자 전역 CLAUDE.md(`~/.claude/CLAUDE.md`)에 설치한다. | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) (MIT) |
+| `create-issue` | 간단한 작업 설명을 받아 agent teams(리더1+팀원2)로 세부 작업을 토론·보완해 이슈 초안으로 정리한다. | 자작 |
 | `grill-me` | 의도, 제약, 숨은 가정, 대안을 집요한 인터뷰로 끌어내 컨텍스트를 확장한다. | [satya-janghu/agent-skills](https://github.com/satya-janghu/agent-skills) (MIT) |
 | `humanizer` | AI가 쓴 티가 나는 글쓰기 패턴 33가지를 감지하고 자연스럽게 고쳐 쓴다. | [blader/humanizer](https://github.com/blader/humanizer) (MIT) |
 
