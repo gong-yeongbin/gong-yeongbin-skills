@@ -19,6 +19,32 @@ npx skills@latest add gong-yeongbin/gong-yeongbin-skills --skill humanizer
 
 `skills` CLI가 어느 에이전트(Claude Code, Cursor, Codex 등)에 설치할지, 프로젝트 로컬과 유저 전역 중 어디에 둘지 물어본다.
 
+### 전역(유저 레벨) 설치
+
+모든 프로젝트에서 쓰려면 `-g`로 유저 전역(`~/.claude/skills/`)에 설치한다. 이때 `-a claude-code`로 대상 에이전트를 Claude Code로 좁혀야 한다.
+
+```
+npx skills@latest add gong-yeongbin/gong-yeongbin-skills --skill grill-me -a claude-code -g
+```
+
+> 대상을 지정하지 않으면 CLI가 감지한 모든 에이전트에 설치를 시도하는데, 그중 일부(예: `PromptScript`)는 전역 설치를 지원하지 않아 빨간 `Failed to install` 메시지가 뜬다. 이는 해당 에이전트에만 해당하며 Claude Code 설치 자체는 성공하지만, `-a claude-code`로 좁히면 이 메시지 없이 깔끔하게 설치된다.
+
+### `andrej-karpathy-guidelines` — 설치 후 한 단계 더
+
+이 스킬만 다른 스킬과 다르다. `skills add`는 스킬 **파일을 복사만** 할 뿐 `install.sh`를 실행하지 않는다. 실제 지침은 `install.sh`가 실행될 때 비로소 사용자 전역 `~/.claude/CLAUDE.md`에 주입된다. 따라서 아래 2단계를 거쳐야 한다.
+
+```bash
+# 1. 스킬을 전역에 복사
+npx skills@latest add gong-yeongbin/gong-yeongbin-skills --skill andrej-karpathy-guidelines -a claude-code -g
+
+# 2. 복사된 install.sh를 실행해 ~/.claude/CLAUDE.md에 지침 주입
+bash ~/.claude/skills/andrej-karpathy-guidelines/install.sh
+```
+
+- `installed:` 또는 `updated:` 메시지가 뜨면 성공이다. 마커 블록으로 감싸 주입하므로 여러 번 실행해도 중복되지 않고 블록만 교체된다(idempotent).
+- 전역 `~/.claude/CLAUDE.md`는 새 세션부터 로드되므로, 변경은 **다음 세션부터** 적용된다.
+- `skills add` 없이 이 저장소를 clone 했다면 복사 단계를 건너뛰고 `bash skills/andrej-karpathy-guidelines/install.sh`를 바로 실행해도 된다.
+
 ## 제공 스킬
 
 | 스킬 | 설명 | 출처 / 라이선스 |
