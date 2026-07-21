@@ -69,10 +69,14 @@ bash ~/.claude/skills/andrej-karpathy-guidelines/install.sh
 | 스킬 | 설명 | 출처 / 라이선스 |
 |---|---|---|
 | `andrej-karpathy-guidelines` | LLM 코딩 실수를 줄이는 행동지침 4가지를 사용자 전역 CLAUDE.md(`~/.claude/CLAUDE.md`)에 설치한다. | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) (MIT) |
+| `brainstorming` | 아이디어를 대화형으로 파고들어 설계·스펙 문서로 정리하고 승인 게이트를 거친다. 브라우저 기반 visual companion 부속 도구 포함. | [obra/superpowers](https://github.com/obra/superpowers) (MIT) |
 | `grill-me` | 의도, 제약, 숨은 가정, 대안을 집요한 인터뷰로 끌어내 컨텍스트를 확장한다. | [satya-janghu/agent-skills](https://github.com/satya-janghu/agent-skills) (MIT) |
 | `humanizer` | AI가 쓴 티가 나는 글쓰기 패턴 33가지를 감지하고 자연스럽게 고쳐 쓴다. | [blader/humanizer](https://github.com/blader/humanizer) (MIT) |
 | `setup-matt-pocock-skills` | Matt Pocock 엔지니어링 스킬들이 전제하는 저장소 설정(이슈 트래커, 트리아지 라벨, 도메인 문서)을 스캐폴딩한다. | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) |
 | `skill-installer` | 이 카탈로그의 스킬을 체크박스로 골라 유저/프로젝트 범위로 현재 디바이스에 설치하는 메타 스킬. | 자작 |
+| `writing-plans` | 스펙을 받아 파일 단위·TDD 단계로 쪼갠 구현 계획 문서를 작성한다. `brainstorming`의 후속 단계다. | [obra/superpowers](https://github.com/obra/superpowers) (MIT) |
+
+> `brainstorming`과 `writing-plans`는 원문을 그대로 옮긴 superpowers 스킬이다. 본문이 `executing-plans`, `subagent-driven-development`, `using-git-worktrees` 등 이 카탈로그에 없는 superpowers 스킬을 후속 단계로 참조한다. 해당 스킬을 호출하는 구간은 원본 컬렉션(obra/superpowers)을 함께 설치했을 때만 이어진다.
 
 ## 새 스킬 추가
 
