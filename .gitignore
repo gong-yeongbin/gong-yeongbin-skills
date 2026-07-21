@@ -214,3 +214,7 @@ dist
 skills-lock.json
 .claude/
 
+# 작업용 계획/맥락 문서 (커밋 대상 아님)
+checklist.md
+context-notes.md
+

@@ -1,10 +1,29 @@
 # gong-yeongbin-skills
 
-자주 쓰는 Claude Code 스킬을 모아 둔 카탈로그다. 표준 [`skills`](https://github.com/vercel-labs/skills) CLI로 원하는 스킬만 골라 설치한다.
+자주 쓰는 Claude Code 스킬을 모아 둔 카탈로그다. `skill-installer` 메타 스킬로 Claude Code 안에서 골라 설치하거나, 표준 [`skills`](https://github.com/vercel-labs/skills) CLI를 직접 쓴다.
 
-## 설치
+## 설치 (권장) — skill-installer
 
-명령 한 줄로 목록을 띄우고 골라 설치한다.
+새 디바이스에서 한 번만 부트스트랩한다.
+
+```
+npx -y skills@latest add gong-yeongbin/gong-yeongbin-skills --skill skill-installer -g -a claude-code -y
+```
+
+이후에는 터미널 명령이 필요 없다. Claude Code에서 이렇게 말하면 된다.
+
+```
+스킬 설치해줘
+```
+
+카탈로그 스킬 목록이 체크박스로 표시되고, 고른 뒤 설치 범위를 묻는다.
+
+- **유저** — `~/.claude/skills`. 이 디바이스의 모든 프로젝트에서 사용.
+- **프로젝트** — `<프로젝트>/.claude/skills`. 해당 프로젝트에서만 사용하며 git 커밋 대상.
+
+이미 설치된 스킬을 다시 선택하면 최신 내용으로 덮어쓴다(업데이트).
+
+## 설치 (대안) — 표준 skills CLI
 
 ```
 npx skills@latest add gong-yeongbin/gong-yeongbin-skills --list
@@ -70,6 +89,8 @@ bash ~/.claude/skills/andrej-karpathy-guidelines/install.sh
 | `create-issue` | 간단한 작업 설명을 받아 agent teams(리더1+팀원2)로 세부 작업을 토론·보완해 이슈 초안으로 정리한다. | 자작 |
 | `grill-me` | 의도, 제약, 숨은 가정, 대안을 집요한 인터뷰로 끌어내 컨텍스트를 확장한다. | [satya-janghu/agent-skills](https://github.com/satya-janghu/agent-skills) (MIT) |
 | `humanizer` | AI가 쓴 티가 나는 글쓰기 패턴 33가지를 감지하고 자연스럽게 고쳐 쓴다. | [blader/humanizer](https://github.com/blader/humanizer) (MIT) |
+| `setup-matt-pocock-skills` | Matt Pocock 엔지니어링 스킬들이 전제하는 저장소 설정(이슈 트래커, 트리아지 라벨, 도메인 문서)을 스캐폴딩한다. | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) |
+| `skill-installer` | 이 카탈로그의 스킬을 체크박스로 골라 유저/프로젝트 범위로 현재 디바이스에 설치하는 메타 스킬. | 자작 |
 
 ## 새 스킬 추가
 
