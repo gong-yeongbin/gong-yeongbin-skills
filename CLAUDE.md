@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 저장소 개요
 
-Claude Code 플러그인 마켓플레이스 저장소다. 빌드/테스트/린트 도구는 없으며, 산출물은 매니페스트 JSON과 SKILL.md 문서, 부속 bash 스크립트뿐이다. 사용자는 `/plugin marketplace add gong-yeongbin/gong-yeongbin-skills`로 등록한 뒤 `/plugin install <플러그인>@gong-yeongbin-skills`로 설치한다.
+Claude Code 플러그인 마켓플레이스 저장소다. 빌드/테스트/린트 도구는 없으며, 산출물은 매니페스트 JSON과 마크다운 문서, 훅 설정뿐이다. 사용자는 `/plugin marketplace add gong-yeongbin/gong-yeongbin-skills`로 등록한 뒤 `/plugin install <플러그인>@gong-yeongbin-skills`로 설치한다.
 
 ## 핵심 구조
 
@@ -59,10 +59,12 @@ claude plugin marketplace remove gong-yeongbin-skills
 
 GitHub 원격 기준 설치는 push된 상태만 반영하므로, 커밋 전 검증은 반드시 로컬 절대 경로로 한다.
 
+`claude plugin validate`가 내는 "No version specified" warning은 의도된 상태이므로 고치지 않는다. version을 다시 넣으면 수동 범프 의무가 부활한다.
+
 ## 컨벤션
 
 - 커밋 메시지는 한국어이며 Conventional Commits 접두사(`feat:`, `refactor:` 등)를 쓴다.
-- SKILL.md 본문 등 문서는 한국어로 작성한다. 단 외부에서 원문 그대로 가져온 스킬(예: `humanizer`)은 원문을 유지한다. marketplace.json 엔트리의 `description`은 한국어 한 줄, plugin.json의 `description`은 SKILL.md frontmatter 원문을 따른다.
+- SKILL.md 본문 등 문서는 한국어로 작성한다. 단 외부에서 원문 그대로 가져온 파일(예: `andrej-karpathy-guidelines`의 `guidelines.md`)은 원문을 유지한다. marketplace.json 엔트리의 `description`은 한국어 한 줄이다. plugin.json의 `description`은 스킬 플러그인이면 SKILL.md frontmatter 원문을 따르고, 훅 플러그인이면 한국어 한 줄로 쓴다.
 - 외부 스킬·플러그인은 출처와 라이선스를 README 표에 표기한다.
 
 ## 절대 규칙
