@@ -1,0 +1,39 @@
+{
+  "name": "gong-yeongbin-skills",
+  "owner": {
+    "name": "gong-yeongbin",
+    "email": "youngbin816@gmail.com"
+  },
+  "description": "자주 쓰는 Claude Code 스킬을 스킬별 플러그인으로 제공하고, 외부 플러그인도 함께 등록하는 개인 플러그인 허브.",
+  "plugins": [
+    {
+      "name": "andrej-karpathy-guidelines",
+      "source": "./skills/andrej-karpathy-guidelines",
+      "description": "LLM 코딩 실수를 줄이는 행동지침 4가지를 SessionStart 훅으로 매 세션에 자동 주입한다. 설치만 하면 다음 세션부터 적용된다."
+    },
+    {
+      "name": "humanizer",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/blader/humanizer.git"
+      },
+      "description": "AI가 쓴 티가 나는 글쓰기 패턴을 감지하고 자연스럽게 고쳐 쓴다 (외부 플러그인)."
+    },
+    {
+      "name": "mattpocock-skills",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/mattpocock/skills.git"
+      },
+      "description": "Matt Pocock의 엔지니어링·생산성 스킬 22종 컬렉션 (외부 플러그인). setup-matt-pocock-skills, tdd, code-review 등을 포함한다."
+    },
+    {
+      "name": "superpowers",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/superpowers.git"
+      },
+      "description": "TDD, 디버깅, 협업 패턴 등 스킬 14종 컬렉션 (외부 플러그인). brainstorming, writing-plans, executing-plans 등을 포함한다."
+    }
+  ]
+}

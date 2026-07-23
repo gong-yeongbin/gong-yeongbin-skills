@@ -1,83 +1,69 @@
 # gong-yeongbin-skills
 
-자주 쓰는 Claude Code 스킬을 모아 둔 카탈로그다. `skill-installer` 메타 스킬로 Claude Code 안에서 골라 설치하거나, 표준 [`skills`](https://github.com/vercel-labs/skills) CLI를 직접 쓴다.
+자주 쓰는 Claude Code 스킬을 스킬별 플러그인으로 제공하는 개인 플러그인 마켓플레이스다. 이 저장소의 자체 스킬뿐 아니라 외부 저장소의 플러그인도 함께 등록해 하나의 허브에서 설치할 수 있다.
 
-## 설치 (권장) — skill-installer
+## 설치
 
-새 디바이스에서 한 번만 부트스트랩한다.
-
-```
-npx -y skills@latest add gong-yeongbin/gong-yeongbin-skills --skill skill-installer -g -a claude-code -y
-```
-
-이후에는 터미널 명령이 필요 없다. Claude Code에서 이렇게 말하면 된다.
+Claude Code에서 마켓플레이스를 한 번 등록한다.
 
 ```
-스킬 설치해줘
+/plugin marketplace add gong-yeongbin/gong-yeongbin-skills
 ```
 
-카탈로그 스킬 목록이 체크박스로 표시되고, 고른 뒤 설치 범위를 묻는다.
-
-- **유저** — `~/.claude/skills`. 이 디바이스의 모든 프로젝트에서 사용.
-- **프로젝트** — `<프로젝트>/.claude/skills`. 해당 프로젝트에서만 사용하며 git 커밋 대상.
-
-이미 설치된 스킬을 다시 선택하면 최신 내용으로 덮어쓴다(업데이트).
-
-## 설치 (대안) — 표준 skills CLI
+이후 원하는 플러그인을 골라 설치한다.
 
 ```
-npx skills@latest add gong-yeongbin/gong-yeongbin-skills --list
+/plugin install humanizer@gong-yeongbin-skills
 ```
 
-- 설치 가능한 스킬 목록이 표시되고, 원하는 스킬을 골라 설치한다.
-- 특정 스킬만 바로 설치하려면 `--skill <스킬명>`을 쓴다.
+`/plugin` 명령만 입력하면 마켓플레이스 목록을 UI로 탐색하면서 골라 설치할 수도 있다.
 
-```
-npx skills@latest add gong-yeongbin/gong-yeongbin-skills --skill humanizer
-```
+- 설치 범위는 기본이 유저(모든 프로젝트에서 사용)이며, 프로젝트 범위로 설치하려면 터미널에서 `claude plugin install --scope project <플러그인>@gong-yeongbin-skills`를 쓴다.
+- 업데이트는 `/plugin update <플러그인>`, 마켓플레이스 갱신은 `/plugin marketplace update gong-yeongbin-skills`로 한다.
+- 업데이트를 자동으로 받으려면 `/plugin` → **Marketplaces** 탭 → `gong-yeongbin-skills` → **Enable auto-update**를 켠다. 서드파티 마켓플레이스는 기본이 off다. 켜 두면 세션 시작 후 백그라운드에서 자동 갱신되며, 다음 세션 또는 `/reload-plugins`부터 반영된다.
+- 제거는 `/plugin uninstall <플러그인>`이다.
 
-`skills` CLI가 어느 에이전트(Claude Code, Cursor, Codex 등)에 설치할지, 프로젝트 로컬과 유저 전역 중 어디에 둘지 물어본다.
+> 과거 skills CLI(`npx skills add`)로 설치해 둔 스킬 사본은 이번 전환의 영향을 받지 않고 그대로 남는다. 이후 업데이트를 받으려면 해당 사본을 지우고 플러그인으로 다시 설치한다.
 
-### 전역(유저 레벨) 설치
+## 제공 플러그인
 
-모든 프로젝트에서 쓰려면 `-g`로 유저 전역(`~/.claude/skills/`)에 설치한다. 이때 `-a claude-code`로 대상 에이전트를 Claude Code로 좁혀야 한다.
-
-```
-npx skills@latest add gong-yeongbin/gong-yeongbin-skills --skill grill-me -a claude-code -g
-```
-
-> 대상을 지정하지 않으면 CLI가 감지한 모든 에이전트에 설치를 시도하는데, 그중 일부(예: `PromptScript`)는 전역 설치를 지원하지 않아 빨간 `Failed to install` 메시지가 뜬다. 이는 해당 에이전트에만 해당하며 Claude Code 설치 자체는 성공하지만, `-a claude-code`로 좁히면 이 메시지 없이 깔끔하게 설치된다.
-
-### `andrej-karpathy-guidelines` — 설치 후 한 단계 더
-
-이 스킬만 다른 스킬과 다르다. `skills add`는 스킬 **파일을 복사만** 할 뿐 `install.sh`를 실행하지 않는다. 실제 지침은 `install.sh`가 실행될 때 비로소 사용자 전역 `~/.claude/CLAUDE.md`에 주입된다. 따라서 아래 2단계를 거쳐야 한다.
-
-```bash
-# 1. 스킬을 전역에 복사
-npx skills@latest add gong-yeongbin/gong-yeongbin-skills --skill andrej-karpathy-guidelines -a claude-code -g
-
-# 2. 복사된 install.sh를 실행해 ~/.claude/CLAUDE.md에 지침 주입
-bash ~/.claude/skills/andrej-karpathy-guidelines/install.sh
-```
-
-- `installed:` 또는 `updated:` 메시지가 뜨면 성공이다. 마커 블록으로 감싸 주입하므로 여러 번 실행해도 중복되지 않고 블록만 교체된다(idempotent).
-- 전역 `~/.claude/CLAUDE.md`는 새 세션부터 로드되므로, 변경은 **다음 세션부터** 적용된다.
-- `skills add` 없이 이 저장소를 clone 했다면 복사 단계를 건너뛰고 `bash skills/andrej-karpathy-guidelines/install.sh`를 바로 실행해도 된다.
-
-## 제공 스킬
-
-| 스킬 | 설명 | 출처 / 라이선스 |
+| 플러그인 | 설명 | 출처 / 라이선스 |
 |---|---|---|
-| `andrej-karpathy-guidelines` | LLM 코딩 실수를 줄이는 행동지침 4가지를 사용자 전역 CLAUDE.md(`~/.claude/CLAUDE.md`)에 설치한다. | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) (MIT) |
-| `brainstorming` | 아이디어를 대화형으로 파고들어 설계·스펙 문서로 정리하고 승인 게이트를 거친다. 브라우저 기반 visual companion 부속 도구 포함. | [obra/superpowers](https://github.com/obra/superpowers) (MIT) |
-| `grill-me` | 의도, 제약, 숨은 가정, 대안을 집요한 인터뷰로 끌어내 컨텍스트를 확장한다. | [satya-janghu/agent-skills](https://github.com/satya-janghu/agent-skills) (MIT) |
-| `humanizer` | AI가 쓴 티가 나는 글쓰기 패턴 33가지를 감지하고 자연스럽게 고쳐 쓴다. | [blader/humanizer](https://github.com/blader/humanizer) (MIT) |
-| `setup-matt-pocock-skills` | Matt Pocock 엔지니어링 스킬들이 전제하는 저장소 설정(이슈 트래커, 트리아지 라벨, 도메인 문서)을 스캐폴딩한다. | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) |
-| `skill-installer` | 이 카탈로그의 스킬을 체크박스로 골라 유저/프로젝트 범위로 현재 디바이스에 설치하는 메타 스킬. | 자작 |
-| `writing-plans` | 스펙을 받아 파일 단위·TDD 단계로 쪼갠 구현 계획 문서를 작성한다. `brainstorming`의 후속 단계다. | [obra/superpowers](https://github.com/obra/superpowers) (MIT) |
+| `andrej-karpathy-guidelines` | LLM 코딩 실수를 줄이는 행동지침 4가지를 SessionStart 훅으로 매 세션 컨텍스트에 자동 주입한다. 원본에 없는 훅 자동 주입 메커니즘을 더한 변형판이라 사본으로 유지한다. | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) (MIT) |
 
-> `brainstorming`과 `writing-plans`는 원문을 그대로 옮긴 superpowers 스킬이다. 본문이 `executing-plans`, `subagent-driven-development`, `using-git-worktrees` 등 이 카탈로그에 없는 superpowers 스킬을 후속 단계로 참조한다. 해당 스킬을 호출하는 구간은 원본 컬렉션(obra/superpowers)을 함께 설치했을 때만 이어진다.
+## 등록된 외부 플러그인
 
-## 새 스킬 추가
+파일을 이 저장소에 두지 않고, 설치 시점에 원 저장소에서 직접 받아 온다. 버전 업데이트가 원 저장소를 자동으로 따라간다.
 
-`skills/<스킬명>/SKILL.md`만 만들면 별도 등록 없이 목록에 잡힌다. frontmatter의 `name`, `description`이 필수다. 자세한 규칙은 [CLAUDE.md](CLAUDE.md)를 참조한다.
+| 플러그인 | 설명 | 출처 / 라이선스 |
+|---|---|---|
+| `humanizer` | AI가 쓴 티가 나는 글쓰기 패턴을 감지하고 자연스럽게 고쳐 쓴다. | [blader/humanizer](https://github.com/blader/humanizer) (MIT) |
+| `mattpocock-skills` | Matt Pocock의 엔지니어링·생산성 스킬 22종 컬렉션. `setup-matt-pocock-skills`, `tdd`, `code-review`, 자체 구현 `grill-me` 등을 포함한다. | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) |
+| `superpowers` | TDD, 디버깅, 협업 패턴 등 스킬 14종 컬렉션. `brainstorming`, `writing-plans`, `executing-plans` 등을 포함한다. | [obra/superpowers](https://github.com/obra/superpowers) (MIT) |
+
+> 과거 이 저장소가 사본으로 제공하던 `brainstorming`·`writing-plans`(→ `superpowers`), `humanizer`(→ `humanizer`), `setup-matt-pocock-skills`(→ `mattpocock-skills`)는 원본 외부 플러그인 설치로 대체됐다. `grill-me` 사본(satya-janghu 구현)은 카탈로그에서 내렸으며, 유사한 인터뷰 용도는 `mattpocock-skills`의 `grilling`·`grill-me`가 담당한다.
+
+### `andrej-karpathy-guidelines` — 동작 방식
+
+설치하면 SessionStart 훅이 매 세션 시작 때 지침(`guidelines.md`)을 컨텍스트에 주입한다. 별도 실행 단계가 없고, 설치 후 새 세션부터 자동 적용된다. `/plugin uninstall` 또는 disable만으로 깨끗하게 중단된다.
+
+지침 내용은 커밋 SHA를 버전으로 쓰므로(plugin.json에 version 없음), 이 저장소에 커밋이 push되면 곧바로 새 버전으로 인식된다. 마켓플레이스 auto-update까지 켜 두면 지침 수정 → push → 설치자 세션에 자동 반영까지 사람 손이 가지 않는다.
+
+> v1(install.sh 방식)으로 `~/.claude/CLAUDE.md`에 지침을 주입해 둔 머신이라면, 그 파일에서 `<!-- andrej-karpathy-guidelines:start -->` ~ `<!-- andrej-karpathy-guidelines:end -->` 마커 블록을 삭제한다. 남겨 두면 지침이 이중으로 주입된다.
+
+## 새 플러그인(자체 스킬) 추가
+
+`skills/<스킬명>/`에 SKILL.md와 plugin.json을 만들고 `.claude-plugin/marketplace.json`에 엔트리를 추가한다. 자세한 규칙은 [CLAUDE.md](CLAUDE.md)를 참조한다.
+
+## 외부 플러그인 등록
+
+다른 저장소의 플러그인도 `.claude-plugin/marketplace.json`의 `plugins` 배열에 엔트리를 추가하면 이 마켓플레이스에서 함께 설치할 수 있다.
+
+```json
+{
+  "name": "some-plugin",
+  "source": { "source": "url", "url": "https://github.com/owner/repo.git" }
+}
+```
+
+`{ "source": "github", "repo": "owner/repo" }` 형식도 있지만 SSH로 clone을 시도하므로, SSH 키가 없는 환경에서도 설치되도록 HTTPS `url` 형식을 기본으로 쓴다.

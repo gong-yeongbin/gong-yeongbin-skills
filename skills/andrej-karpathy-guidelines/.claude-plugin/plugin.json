@@ -1,0 +1,9 @@
+{
+  "name": "andrej-karpathy-guidelines",
+  "description": "LLM 코딩 실수를 줄이는 Andrej Karpathy 행동지침 4가지를 SessionStart 훅으로 매 세션 컨텍스트에 자동 주입한다.",
+  "license": "MIT",
+  "homepage": "https://github.com/multica-ai/andrej-karpathy-skills",
+  "author": {
+    "name": "multica-ai"
+  }
+}
