@@ -110,6 +110,6 @@ feat: 인증 헤더를 Authorization Bearer 방식으로 변경
 - AuthFilter, OpenAPI 명세, 샘플 코드의 헤더 이름 일괄 교체
 - RFC 6750 준수와 외부 SDK 호환성 확보가 목적
 
-BREAKING CHANGE: 모든 클라이언트는 X-Auth-Token 대신 Authorization: Bearer <token> 헤더를 보내야 함
+BREAKING CHANGE: 모든 클라이언트는 X-Auth-Token 대신 Authorization: Bearer <token> 헤더 사용 필요
 Refs: #5108
 ```
