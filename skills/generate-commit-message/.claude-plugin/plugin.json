@@ -1,0 +1,4 @@
+{
+  "name": "generate-commit-message",
+  "description": "현재 저장소의 staged diff(없으면 unstaged diff)와 브랜치명을 분석해 Conventional Commits 형식의 한국어 커밋 메시지 하나를 만든다. `<type>: 요약` 제목, What·Why 불릿 본문, 필요하면 `BREAKING CHANGE`·`Refs` 꼬리말로 구성한다. 메시지만 출력하며 `git commit`·push 는 하지 않는다. 관련 없는 변경이 섞여 있으면 커밋 분리를 제안한다. 개발자가 다음과 같이 말할 때 반드시 이 스킬을 사용하세요. \"커밋 메시지 만들어줘\", \"커밋 메시지 작성해줘\", \"diff 보고 커밋 메시지 써줘\", \"Conventional Commit 메시지\", \"staged 변경으로 커밋 메시지\", \"/generate-commit-message\"."
+}

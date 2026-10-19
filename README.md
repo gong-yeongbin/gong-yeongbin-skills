@@ -28,6 +28,7 @@ Claude Code에서 마켓플레이스를 한 번 등록한다.
 | 플러그인 | 종류 | 설명 |
 | --- | --- | --- |
 | `create-issues` | 자체 스킬 | 요구사항을 인터뷰로 굳혀 `intent.md`·`spec.md`를 만들고 GitHub Issues(`gh`) 또는 Notion 이슈 DB(Notion MCP)에 이슈를 생성한다. 대상을 생략하면 같은 폴더에 `issue-solve.md`·`issue-test.md` 파일로 남긴다. `/create-issues [github\|notion] <요구사항>`으로 호출한다. |
+| `generate-commit-message` | 자체 스킬 | staged diff(없으면 unstaged)와 브랜치명을 분석해 Conventional Commits 형식의 한국어 커밋 메시지를 만든다. `<type>: 요약` 제목과 What·Why 불릿 본문으로 구성하며, 브랜치명에 이슈 번호가 있으면 `Refs: #번호`를 붙인다. 메시지만 출력하고 커밋은 하지 않는다. `/generate-commit-message [보충 설명]`으로 호출한다. |
 
 설치 예시.
 

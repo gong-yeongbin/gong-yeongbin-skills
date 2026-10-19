@@ -10,6 +10,11 @@
       "name": "create-issues",
       "source": "./skills/create-issues",
       "description": "요구사항을 인터뷰로 굳혀 intent.md·spec.md 를 만들고, GitHub·Notion 에 이슈를 생성하거나 대상이 없으면 이슈 파일로 남기는 준비 단계 스킬."
+    },
+    {
+      "name": "generate-commit-message",
+      "source": "./skills/generate-commit-message",
+      "description": "staged diff 와 브랜치명을 분석해 Conventional Commits 형식의 한국어 커밋 메시지를 만든다. 커밋은 하지 않는다."
     }
   ]
 }
