@@ -5,5 +5,11 @@
     "email": "youngbin816@gmail.com"
   },
   "description": "자주 쓰는 Claude Code 스킬을 스킬별 플러그인으로 제공하고, 외부 플러그인도 함께 등록하는 개인 플러그인 허브.",
-  "plugins": []
+  "plugins": [
+    {
+      "name": "create-issues",
+      "source": "./skills/create-issues",
+      "description": "요구사항을 인터뷰로 굳혀 intent.md·spec.md 를 만들고, GitHub·Notion 에 이슈를 생성하거나 대상이 없으면 이슈 파일로 남기는 준비 단계 스킬."
+    }
+  ]
 }
