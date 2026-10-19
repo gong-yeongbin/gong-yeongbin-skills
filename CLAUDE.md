@@ -14,7 +14,7 @@ Claude Code 플러그인 마켓플레이스 저장소다. 빌드/테스트/린�
 .claude-plugin/marketplace.json              # 마켓플레이스 매니페스트 (플러그인 목록)
 skills/<플러그인명>/.claude-plugin/plugin.json  # 필수. name, description (version은 생략)
 skills/<플러그인명>/SKILL.md                    # 스킬 플러그인일 때. frontmatter의 name, description 필수
-skills/<플러그인명>/hooks/hooks.json            # 훅 플러그인일 때 (예: andrej-karpathy-guidelines)
+skills/<플러그인명>/hooks/hooks.json            # 훅 플러그인일 때
 skills/<플러그인명>/...                         # LICENSE, guidelines.md 등 부속 파일 (선택)
 ```
 
@@ -24,7 +24,7 @@ skills/<플러그인명>/...                         # LICENSE, guidelines.md �
 2. `skills/<스킬명>/.claude-plugin/plugin.json`을 만든다. `name`(디렉터리명과 동일), `description`을 넣고, 외부에서 가져온 스킬이면 `license`와 `homepage`(원 저장소)도 표기한다. **`version`은 넣지 않는다.** version이 있으면 그 값을 올려야만 설치자에게 업데이트로 인식되고, 생략하면 git 커밋 SHA가 버전으로 쓰여 커밋·push만으로 새 버전이 된다. 이 저장소의 자체 플러그인은 후자를 쓴다.
 3. `.claude-plugin/marketplace.json`의 `plugins` 배열에 엔트리를 추가한다. `{ "name": "<스킬명>", "source": "./skills/<스킬명>", "description": "<한국어 한 줄>" }` 형식이다.
 4. 외부에서 가져온 스킬이면 원본 라이선스 파일(예: `LICENSE`)을 같은 디렉터리에 함께 둔다. 플러그인 설치 시 디렉터리 전체가 복사되므로 재배포 조건이 유지된다.
-5. 매 세션 자동으로 적용돼야 하는 지침형 플러그인은 SKILL.md 대신 `hooks/hooks.json`의 SessionStart 훅으로 만든다. 훅 command의 stdout이 세션 컨텍스트에 그대로 주입되며, 번들 파일은 `${CLAUDE_PLUGIN_ROOT}` 기준으로 참조한다. `andrej-karpathy-guidelines`가 이 방식이다(`cat "${CLAUDE_PLUGIN_ROOT}"/guidelines.md`). 플러그인에는 설치 시점 1회 실행 훅이 없으므로, 설치형 스크립트 방식은 쓰지 않는다.
+5. 매 세션 자동으로 적용돼야 하는 지침형 플러그인은 SKILL.md 대신 `hooks/hooks.json`의 SessionStart 훅으로 만든다. 훅 command의 stdout이 세션 컨텍스트에 그대로 주입되며, 번들 파일은 `${CLAUDE_PLUGIN_ROOT}` 기준으로 참조한다(예: `cat "${CLAUDE_PLUGIN_ROOT}"/guidelines.md`). 플러그인에는 설치 시점 1회 실행 훅이 없으므로, 설치형 스크립트 방식은 쓰지 않는다.
 
 ## 외부 플러그인 등록하기
 
@@ -64,7 +64,7 @@ GitHub 원격 기준 설치는 push된 상태만 반영하므로, 커밋 전 검
 ## 컨벤션
 
 - 커밋 메시지는 한국어이며 Conventional Commits 접두사(`feat:`, `refactor:` 등)를 쓴다.
-- SKILL.md 본문 등 문서는 한국어로 작성한다. 단 외부에서 원문 그대로 가져온 파일(예: `andrej-karpathy-guidelines`의 `guidelines.md`)은 원문을 유지한다. marketplace.json 엔트리의 `description`은 한국어 한 줄이다. plugin.json의 `description`은 스킬 플러그인이면 SKILL.md frontmatter 원문을 따르고, 훅 플러그인이면 한국어 한 줄로 쓴다.
+- SKILL.md 본문 등 문서는 한국어로 작성한다. 단 외부에서 원문 그대로 가져온 파일은 원문을 유지한다. marketplace.json 엔트리의 `description`은 한국어 한 줄이다. plugin.json의 `description`은 스킬 플러그인이면 SKILL.md frontmatter 원문을 따르고, 훅 플러그인이면 한국어 한 줄로 쓴다.
 - 외부 스킬·플러그인은 출처와 라이선스를 README 표에 표기한다.
 
 ## 절대 규칙
