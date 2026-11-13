@@ -15,6 +15,11 @@
       "name": "commit-message",
       "source": "./skills/commit-message",
       "description": "스테이지된 변경으로 Conventional Commits 형식의 한국어 커밋 메시지를 author·reviewer 2인 에이전트 팀이 작성·검증한다. 커밋은 하지 않는다."
+    },
+    {
+      "name": "agent-definition",
+      "source": "./skills/agent-definition",
+      "description": "에이전트 정의 파일을 생성하는 스킬."
     }
   ]
 }
