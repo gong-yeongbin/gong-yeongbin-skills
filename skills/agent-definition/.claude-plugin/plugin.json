@@ -1,4 +1,4 @@
 {
   "name": "agent-definition",
-  "description": "에이전트 정의 파일을 생성한다."
+  "description": "인터뷰로 명세를 굳힌 뒤 3인 팀(spec-reviewer·author·reviewer)으로 에이전트 정의 파일(.claude/agents/<name>.md) 1개를 생성. '에이전트 정의', '에이전트 만들어줘', '서브에이전트 만들어줘', 'agent definition' 같은 자연어 요청 시 반드시 사용."
 }

@@ -29,10 +29,12 @@ Claude Code에서 마켓플레이스를 한 번 등록한다.
 | --- | --- |
 | `create-issues` | 요구사항을 인터뷰로 굳혀 `intent.md`·`spec.md`를 만들고 GitHub Issues(`gh`) 또는 Notion 이슈 DB(Notion MCP)에 이슈를 생성한다. 대상을 생략하면 같은 폴더에 `issue-solve.md`·`issue-test.md` 파일로 남긴다. `/create-issues [github\|notion] <요구사항>`으로 호출한다. |
 | `commit-message` | 스테이지된 변경(`git diff --cached`)과 최근 커밋 로그를 바탕으로 Conventional Commits 형식의 한국어 커밋 메시지를 만든다. `commit-msg-author` 에이전트가 초안을 쓰고 `commit-msg-reviewer` 에이전트가 형식과 diff 일치를 검증하며, REDO 판정이면 최대 2회까지 다시 쓴다. 메시지만 제시하고 커밋은 하지 않는다. `/commit-message`로 호출한다. |
+| `agent-definition` | 사용자와 1문1답 인터뷰로 에이전트 명세(`_workspace/agent-spec.md`)를 굳힌 뒤, `agent-spec-reviewer`가 명세를 검증하고 `agent-def-author`가 `references/template.md` 규격(프론트매터 5필드, 본문 7섹션)으로 정의 파일 초안을 쓰며 `agent-def-reviewer`가 규격과 명세 일치를 검증한다. 각 검증은 REDO 판정이면 최대 3회까지 다시 한다. PASS면 `.claude/agents/<name>.md`로 저장한다. `/agent-definition`으로 호출한다. |
 
 설치 예시.
 
 ```
 /plugin install create-issues@gong-yeongbin-skills
 /plugin install commit-message@gong-yeongbin-skills
+/plugin install agent-definition@gong-yeongbin-skills
 ```
